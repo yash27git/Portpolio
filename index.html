@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>YAASH — Portfolio</title>
+  <meta name="description" content="YAASH — Cybersecurity student, developer, and designer.">
+  <style>
+    /* Reset & base */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:#07060a;color:#e6eef8;line-height:1.5;
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      padding-bottom:80px;
+    }
+    .container{max-width:1100px;margin:0 auto;padding:58px}
+    header{position:fixed;left:0;right:0;top:0;backdrop-filter:blur(6px);background:linear-gradient(180deg, rgba(7,6,10,0.55), rgba(7,6,10,0.25));z-index:60}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:12px 20px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:46px;height:46px;border-radius:10px;display:grid;place-items:center;font-weight:700;background:linear-gradient(135deg,#7b61ff,#00e0ff);}
+    .nav-links{display:flex;gap:18px}
+    .nav-links a{color:rgba(230,238,248,0.75);text-decoration:none;font-weight:600}
+    .cta{padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,#7b61ff33,#00e0ff22);border:1px solid rgba(124,90,255,0.12)}
+    main{padding-top:110px}
+    .hero{display:flex;gap:28px;align-items:center}
+    .hero-left{flex:1}
+    .hero-right{width:340px}
+    h1{font-size:clamp(28px,5vw,44px);margin-bottom:10px}
+    .title-line{display:flex;gap:12px;align-items:center}
+    .tag{font-weight:600;color:#9fb3ff}
+    .typewriter{font-weight:700;color:#fff}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+    .about{margin-top:18px}
+    .about p{color:#c9d8ff}
+    .skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .skill{padding:10px 12px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);font-weight:600}
+    .skill:hover{transform:translateY(-6px);box-shadow:0 8px 30px rgba(124,90,255,0.12)}
+    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:18px}
+    .project{position:relative;overflow:hidden;border-radius:12px;padding:18px;height:180px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.32));border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .project .title{font-weight:700;margin-bottom:6px}
+    .project .meta{font-size:13px;color:#aecbff}
+    .project::after{content:"";position:absolute;left:0;top:0;right:0;bottom:0;background:linear-gradient(135deg, rgba(123,97,255,0.08), rgba(0,224,255,0.06));mix-blend-mode:screen;pointer-events:none}
+    .project:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(11,9,20,0.6)}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:12px}
+    .thumb{height:100px;border-radius:10px;background:linear-gradient(135deg,#111,#222);display:grid;place-items:center;font-weight:700;color:#9fb3ff;border:1px solid rgba(255,255,255,0.02)}
+    .contact-form{display:grid;gap:8px;margin-top:12px}
+    .input,textarea{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);padding:10px;border-radius:8px;color:#e6eef8}
+    .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,#7b61ff,#00e0ff);border:none;color:#07101a;font-weight:800;cursor:pointer}
+    footer{margin:28px 0 80px;color:rgba(230,238,248,0.6);text-align:center}
+    .fade-in{opacity:0;transform:translateY(18px);transition:all 700ms cubic-bezier(.22,.9,.3,1)}
+    .fade-in.show{opacity:1;transform:none}
+    .typing{display:inline-block;white-space:nowrap;overflow:hidden;border-right:2px solid rgba(255,255,255,0.12)}
+    @media (max-width:800px){
+      .hero{flex-direction:column}
+      .hero-right{width:100%}
+      nav{padding:10px}
+    }
+
+    /* Modal styles */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.7);display:none;align-items:center;justify-content:center;z-index:200}
+    .modal-backdrop.show{display:flex}
+    .modal{width:clamp(300px,80%,900px);background:#0b0910;border-radius:12px;padding:18px;box-shadow:0 20px 60px rgba(2,6,23,0.8);max-height:85vh;overflow:auto;border:1px solid rgba(255,255,255,0.04)}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .modal-title{font-weight:800}
+    .modal-body{margin-top:12px;display:grid;grid-template-columns:1fr 300px;gap:12px}
+    .modal-img{width:100%;height:100%;max-height:360px;border-radius:8px;object-fit:cover;background:#111}
+    .modal-desc{color:#c9d8ff}
+    .close-btn{background:transparent;border:none;color:#9fb3ff;font-weight:800;cursor:pointer}
+    @media (max-width:800px){ .modal-body{grid-template-columns:1fr} .modal{padding:12px;} }
+  </style>
+</head>
+<!-- Link to CSS -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Yaash Portfolio</h1>
+  <nav>
+    <button class="btn">About</button>
+    <button class="btn">Projects</button>
+    <button class="btn">Contact</button>
+  </nav>
+</header>
+
+<main>
+  <section>
+    <h2>Welcome</h2>
+    <p>This one's  Yaash's portfolio website.</p>
+    <!-- <button class="cta">View My Work</button> -->
+  </section>
+</main>
+<body>
+  <!-- Link to JavaScript (before closing body) -->
+  <script src="script.js"></script>
+</body>
+</html>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand">
+          <div class="logo">YA</div>
+          <div>
+            <div style="font-weight:800">YAASH</div>
+            <div style="font-size:12px;color:#9fb3ff">Cybersecurity • Developer • Designer</div>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact" class="cta">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="card fade-in" data-delay="0">
+          <div class="title-line">
+            <h2>
+              <!-- I'm--> <span class="typing-wrapper">
+                <span class="typing-text"></span>
+              </span>
+            </h2>
+            
+            <!-- <div class="tag">Hi, I'm</div> -->
+            <h2 class="typewriter">
+              I'm <h1>YASH</h1><h3><span class="typing-wrapper"><span class="typing" id="typed"></span></span></h3>
+            </h2>
+            
+            <!-- <h2 class="typewriter">YAASH — <span class="typing" id="typed"></span></h2> -->
+          </div>
+          <p style="margin-top:10px;color:#c9d8ff">INFJ • Cybersecurity student focused on ethical hacking, anti-cheat systems, and immersive game dev and InterSteller Space. I build software, design visuals, and produce music.</p>
+
+          <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+            <a href="#projects" class="btn">View Projects</a>
+            <a href="#contact" class="cta" style="padding:8px 10px">Hire / Contact</a>
+          </div>
+        </div>
+
+        <div id="about" class="about fade-in" data-delay="120">
+          <div class="card" style="margin-top:12px">
+            <h3 style="margin-bottom:8px">About Me</h3>
+            <p>I study ethical hacking and cybersecurity, developing anti-cheat. I also tried create a psychological horror game using Unreal Engine 4 and do graphic design & music production in FL Studio Mobile.</p>
+          </div>
+        </div>
+
+        <section id="skills" class="fade-in" data-delay="240">
+          <div class="card" style="margin-top:12px">
+            <h3>Skills</h3>
+            <div class="skills" style="margin-top:10px">
+              <div class="skill">C++ (DSA & UE4)</div>
+              <div class="skill">Python</div>
+              <div class="skill">Java</div>
+              <div class="skill">10% Rust</div>
+              <div class="skill">20% Ruby</div>
+              <div class="skill">Androids and (Cheats)</div>
+              <!-- <div class="skill">Firebase / Express</div> -->
+              <!-- <div class="skill">Certificate Pinning</div> -->
+              <div class="skill">Unreal Engine 4</div>
+              <div class="skill">FL Studio Mobile</div>
+              <div class="skill">Graphic Design</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="hero-right">
+        <div class="card fade-in" data-delay="360" style="text-align:center">
+          <div style="font-weight:800;font-size:18px">Quick Stats</div>
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:12px">
+            <div style="text-align:center"><div style="font-weight:800;font-size:20px">1</div><div style="font-size:12px;color:#9fb3ff">Major Project</div></div>
+            <div style="text-align:center"><div style="font-weight:800;font-size:20px">3+</div><div style="font-size:12px;color:#9fb3ff">Active Projects</div></div>
+          </div>
+          <div style="margin-top:12px;color:#c9d8ff;font-size:13px">Location: India • Timezone: Asia/Kolkata</div>
+        </div>
+
+        <div class="card fade-in" data-delay="480" style="margin-top:12px">
+          <h4>Interests</h4>
+          <div style="margin-top:8px;color:#c9d8ff">Ethical Hacking, Horror Game Design, Audio Production, UI/UX, Cybersecurity Research, Stand-up Comedy</div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="fade-in" data-delay="600" style="margin-top:28px">
+      <h2 class="card" style="padding:12px 18px;margin-bottom:12px">Projects</h2>
+      <div class="projects">
+        <div class="project card" tabindex="0" data-title="CodeGrave" data-desc="Platform to submit and revive abandoned GitHub projects with eulogies and revival features." data-images="assets/codegrave1.png,assets/codegrave2.png">
+          <div class="title">CodeGrave</div>
+          <div class="meta">Platform • Full-stack • Contest-ready</div>
+        </div>
+
+        <div class="project card" tabindex="0" data-title="Anti-Cheat Android" data-desc="Server-side logging, certificate pinning, secure logs with JWT, native obfuscation, anti-debug features." data-images="assets/anticheat1.png">
+          <div class="title">Anti-Cheat Android</div>
+          <div class="meta">Mobile Security • Firebase / Express • Native</div>
+        </div>
+
+        <div class="project card" tabindex="0" data-title="Unreal Horror Game" data-desc="Psychological horror game in UE4 inspired by Visage; narrative-driven and atmospheric." data-images="assets/unreal1.png,assets/unreal2.png">
+          <div class="title">UE4 — Psychological Horror</div>
+          <div class="meta">Game Dev • C++ • Level Design</div>
+        </div>
+
+        <div class="project card" tabindex="0" data-title="Graphic Design" data-desc="Branding, logos, and visual assets created for games and projects." data-images="assets/design1.png">
+          <div class="title">Graphic Design</div>
+          <div class="meta">Logos • UI • Posters</div>
+        </div>
+
+        <div class="project card" tabindex="0" data-title="Music Production" data-desc="Tracks and compositions created using FL Studio Mobile." data-images="assets/music1.png">
+          <div class="title">Music Production</div>
+          <div class="meta">FL Studio Mobile • Beats</div>
+        </div>
+      </div>
+
+      <div class="gallery" style="margin-top:12px">
+      <button><div class="thumb">Project 1</div></button>
+    <button><div class="thumb">Project 2</div></button>
+  <button><div class="thumb">Project 3</div></button>
+<button><div class="thumb">Project 4</div></button>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="fade-in" data-delay="720" style="margin-top:28px">
+      <div class="card">
+        <h3>Contact</h3>
+        <p style="color:#c9d8ff;margin-top:8px">Want to collaborate or hire me? Send a message.</p>
+        <form class="contact-form" onsubmit="event.preventDefault();alert('This is a demo form. Replace the handler to send real emails.');">
+          <input class="input" placeholder="Your name" required>
+          <input class="input" placeholder="Your email" required>
+          <textarea class="input" rows="4" placeholder="Message..." required></textarea>
+          <div style="display:flex;gap:8px">
+            <button class="btn">Send Message</button>
+            <button type="button" class="cta" onclick="copyEmail()">Copy Email</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div>Made with ♥ by YAASH — Built for contests, games, and secure apps.</div>
+    </footer>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal-backdrop" class="modal-backdrop" aria-hidden="true">
+    <div role="dialog" aria-modal="true" aria-labelledby="modal-title" class="modal" id="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-title">Project</div>
+        <button class="close-btn" id="modal-close" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <img id="modal-img" class="modal-img" src="" alt="Project screenshot" loading="lazy">
+        </div>
+        <div>
+          <div class="modal-desc" id="modal-desc">Project description</div>
+          <div style="margin-top:12px">
+            <a id="modal-link" href="#" target="_blank" style="color:#9fb3ff;text-decoration:none">Open project</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // Typing animation
+    (function(){
+      const typedEl = document.getElementById('typed');
+      if (!typedEl) return;
+      const phrases = ['Cybersecurity Student','UE4 Dev','Graphic Designer','Music Producer'];
+      let idx = 0, char = 0, forward = true;
+      (function tick(){
+        const word = phrases[idx];
+        if(forward){
+          char++;
+          if(char>word.length){forward=false;setTimeout(tick,900);return}
+        } else {
+          char--;
+          if(char===0){forward=true;idx=(idx+1)%phrases.length}
+        }
+        typedEl.textContent = word.slice(0,char);
+        setTimeout(tick, forward?80:40);
+      })();
+    })();
+
+    // IntersectionObserver reveal
+    (function(){
+      const faders = document.querySelectorAll('.fade-in');
+      if ('IntersectionObserver' in window && faders.length) {
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{
+            if(e.isIntersecting){
+              const el = e.target; setTimeout(()=>el.classList.add('show'), parseInt(el.dataset.delay)||0);
+            }
+          })
+        },{threshold:0.12});
+        faders.forEach(f=>io.observe(f));
+      } else {
+        document.querySelectorAll('.fade-in').forEach(f=>f.classList.add('show'));
+      }
+    })();
+
+    // Modal logic with lazy-loading image handling and accessibility
+    (function(){
+      const backdrop = document.getElementById('modal-backdrop');
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalImg = document.getElementById('modal-img');
+      const modalDesc = document.getElementById('modal-desc');
+      const modalLink = document.getElementById('modal-link');
+      const closeBtn = document.getElementById('modal-close');
+
+      let lastFocused = null;
+
+      function openModal(data){
+        lastFocused = document.activeElement;
+        modalTitle.textContent = data.title || 'Project';
+        modalDesc.textContent = data.desc || '';
+        modalLink.href = data.href || '#';
+        // Lazy load: set src only when opening
+        const images = data.images || [];
+        if (images.length) {
+          modalImg.src = images[0];
+          modalImg.alt = data.title + ' screenshot';
+        } else {
+          modalImg.src = '';
+          modalImg.alt = 'No image';
+        }
+        backdrop.classList.add('show');
+        backdrop.setAttribute('aria-hidden','false');
+        // focus trap basics
+        closeBtn.focus();
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal(){
+        backdrop.classList.remove('show');
+        backdrop.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        // unload image to free memory (and allow next open to lazy-load again)
+        modalImg.removeAttribute('src');
+        if (lastFocused) lastFocused.focus();
+      }
+
+      // attach handlers
+      document.querySelectorAll('.project').forEach(p=>{
+        p.addEventListener('click', ()=>{
+          const title = p.dataset.title;
+          const desc = p.dataset.desc;
+          const images = p.dataset.images ? p.dataset.images.split(',') : [];
+          openModal({title, desc, images});
+        });
+        p.addEventListener('keypress', (e)=>{
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            p.click();
+          }
+        });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', (e)=>{ if (e.target === backdrop) closeModal(); });
+      document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeModal(); });
+
+      // Basic focus trap inside modal (keeps minimal footprint)
+      modal.addEventListener('keydown', function(e){
+        if (e.key !== 'Tab') return;
+        const focusable = modal.querySelectorAll('a,button,input,textarea,[tabindex]:not([tabindex="-1"])');
+        if (!focusable.length) return;
+        const first = focusable[0], last = focusable[focusable.length-1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      });
+
+    })();
+
+    // Copy email demo
+    function copyEmail(){
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText('yaash@example.com').then(()=>alert('Email copied to clipboard: yaash@example.com')).catch(()=>alert('Unable to copy email.'));
+      } else {
+        const tmp = document.createElement('textarea'); tmp.value = 'yaash@example.com'; document.body.appendChild(tmp); tmp.select(); try{document.execCommand('copy'); alert('Email copied to clipboard: yaash@example.com');}catch(e){alert('Copy not supported');} tmp.remove();
+      }
+    }
+
+    // Smooth scroll for nav - account for header height
+    (function(){
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', (e)=>{
+          const href = a.getAttribute('href');
+          if (!href || href === '#'){ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); return; }
+          const target = document.querySelector(href);
+          if (target){
+            e.preventDefault();
+            const header = document.querySelector('header');
+            const headerOffset = header ? header.offsetHeight + 8 : 80;
+            const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          } else {
+            e.preventDefault();
+            console.warn('Target not found for', href);
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
