@@ -173,13 +173,119 @@ button:hover, .btn:hover, .cta:hover {
 
 /*  */
 
+/* ----------------------------- */
+/* 📱 RESPONSIVE DESIGN FIXES */
+/* ----------------------------- */
 
+/* Tablets */
+@media (max-width: 1024px) {
+  .container {
+    padding: 28px;
+  }
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero-right {
+    width: 100%;
+  }
+  .projects {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  .modal {
+    width: 90%;
+  }
+}
 
+/* Mobile */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 60px;
+  }
 
+  header nav {
+    flex-direction: column;
+    gap: 8px;
+  }
 
+  .container {
+    width: 100%;
+    padding: 20px;
+  }
 
+  h1, h2, h3 {
+    font-size: 1.2rem;
+  }
 
+  p {
+    font-size: 0.95rem;
+  }
 
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-left, .hero-right {
+    width: 100%;
+  }
+
+  .skills {
+    justify-content: center;
+  }
+
+  .project {
+    height: auto;
+    min-height: 160px;
+  }
+
+  .modal {
+    width: 95%;
+    padding: 12px;
+  }
+
+  .modal-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .container {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  .btn, .cta {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  .skills {
+    gap: 8px;
+  }
+
+  .skill {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+
+  .project {
+    font-size: 0.9rem;
+  }
+
+  footer {
+    font-size: 0.85rem;
+    padding: 12px;
+  }
+}
 
 
 
