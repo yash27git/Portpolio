@@ -1,4 +1,4 @@
-# YAASH Portfolio (Static Site)
+# YAASH Portpolio (Static Site)
 
 This is a single-page portfolio for **YAASH** with:
 - Dark theme, animated UI
